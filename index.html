@@ -1,176 +1,707 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATEEN POS System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', 'Tajawal', sans-serif; margin: 0; scroll-behavior: smooth; overflow-x: hidden; }
-        .tech-bg-dark {
-            background-color: #000000;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        .tech-bg-light {
-            background-color: #ffffff;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-        }
-        .header-white { background: #ffffff; border-bottom: 1px solid #eee; }
-        .lang-overlay, .contact-modal { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            backdrop-filter: blur(8px);
-        }
-        .modal-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 2.5rem;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            position: relative;
-        }
-        .pulse-green { animation: pulse-animation 2s infinite; }
-        @keyframes pulse-animation {
-            0% { box-shadow: 0 0 0 0px rgba(37, 211, 102, 0.6); }
-            100% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
-        }
-        .hidden { display: none !important; }
-        [data-lang="ar"] { direction: rtl; }
-        [data-lang="ar"] h2, [data-lang="ar"] h3, [data-lang="ar"] p, [data-lang="ar"] a, [data-lang="ar"] button { letter-spacing: 0 !important; }
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>فطين | Fateen Digital Solutions</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --white: #f5f0e8;
+  --gold: #c9a84c;
+  --gold-light: #e8cc7a;
+  --gold-dim: rgba(201,168,76,0.12);
+  --gold-line: rgba(201,168,76,0.3);
+  --gray: #1a1a1a;
+  --gray2: #242424;
+  --muted: #888;
+  --text: #e8e0d0;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--black);
+  color:var(--text);
+  font-family:'Tajawal',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
+
+/* ══ NOISE TEXTURE ══ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.6;
+}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:18px 48px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(8,8,8,0.92);
+  border-bottom:1px solid var(--gold-line);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+}
+.nav-logo img{height:42px;object-fit:contain;}
+.nav-logo-txt{
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:900;
+  color:var(--gold);letter-spacing:2px;
+}
+.nav-cta{
+  background:var(--gold);
+  color:var(--black);
+  border:none;padding:10px 28px;
+  border-radius:2px;
+  font-family:'Tajawal',sans-serif;
+  font-size:13px;font-weight:800;
+  cursor:pointer;
+  letter-spacing:1px;
+  transition:all 0.3s;
+}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px);}
+
+/* ══ HERO ══ */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  text-align:center;
+  padding:120px 24px 80px;
+  position:relative;
+  overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(var(--gold-line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--gold-line) 1px,transparent 1px);
+  background-size:80px 80px;
+  opacity:0.15;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 50%,black,transparent);
+}
+.hero-glow{
+  position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-block;
+  border:1px solid var(--gold-line);
+  background:var(--gold-dim);
+  color:var(--gold);
+  font-size:11px;font-weight:700;
+  letter-spacing:4px;
+  padding:6px 20px;border-radius:20px;
+  margin-bottom:32px;
+  text-transform:uppercase;
+}
+.hero-logo{
+  width:min(320px,70vw);
+  margin-bottom:40px;
+  filter:drop-shadow(0 0 40px rgba(201,168,76,0.2));
+  animation:logoFloat 6s ease-in-out infinite;
+}
+@keyframes logoFloat{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,6vw,72px);
+  font-weight:900;
+  line-height:1.1;
+  color:var(--white);
+  margin-bottom:16px;
+}
+.hero-title span{color:var(--gold);}
+.hero-sub{
+  font-size:clamp(14px,2vw,18px);
+  font-weight:400;
+  color:var(--muted);
+  max-width:520px;
+  line-height:1.8;
+  margin-bottom:48px;
+}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.btn-gold{
+  background:var(--gold);color:var(--black);
+  border:none;padding:14px 40px;border-radius:2px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;letter-spacing:1px;
+  transition:all 0.3s;text-decoration:none;display:inline-block;
+}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 12px 30px rgba(201,168,76,0.25);}
+.btn-outline{
+  background:transparent;color:var(--gold);
+  border:1px solid var(--gold-line);
+  padding:14px 40px;border-radius:2px;
+  font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;letter-spacing:1px;
+  transition:all 0.3s;text-decoration:none;display:inline-block;
+}
+.btn-outline:hover{background:var(--gold-dim);border-color:var(--gold);}
+
+/* scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  color:var(--muted);font-size:10px;letter-spacing:3px;
+  animation:bounce 2s infinite;
+}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);}}
+.scroll-hint::after{content:'';width:1px;height:40px;background:linear-gradient(var(--gold),transparent);}
+
+/* ══ SECTION BASE ══ */
+section{position:relative;z-index:1;}
+.section-label{
+  font-size:10px;font-weight:800;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:16px;
+}
+.section-label::before{content:'';flex:1;max-width:40px;height:1px;background:var(--gold);}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,4vw,48px);
+  font-weight:900;color:var(--white);
+  line-height:1.2;margin-bottom:16px;
+}
+.section-desc{
+  font-size:15px;color:var(--muted);
+  line-height:1.9;max-width:480px;
+}
+
+/* ══ SERVICES ══ */
+#services{padding:120px 0;}
+.services-inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.services-header{margin-bottom:80px;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--gold-line);}
+.service-card{
+  background:var(--black);
+  padding:48px 40px;
+  cursor:pointer;
+  transition:all 0.4s;
+  position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--gold-dim);
+  transform:translateY(100%);
+  transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.service-card:hover::before{transform:translateY(0);}
+.service-card:hover{transform:translateY(-4px);}
+.service-num{
+  font-family:'Playfair Display',serif;
+  font-size:56px;font-weight:900;
+  color:var(--gold-line);
+  line-height:1;margin-bottom:20px;
+  transition:color 0.3s;
+}
+.service-card:hover .service-num{color:var(--gold);}
+.service-icon{font-size:28px;margin-bottom:16px;}
+.service-name{
+  font-size:18px;font-weight:800;
+  color:var(--white);margin-bottom:12px;
+}
+.service-desc{font-size:13px;color:var(--muted);line-height:1.8;}
+.service-tag{
+  display:inline-block;margin-top:16px;
+  border:1px solid var(--gold-line);
+  color:var(--gold);font-size:10px;font-weight:700;
+  letter-spacing:2px;padding:4px 12px;border-radius:20px;
+}
+.service-tag.soon{border-color:rgba(136,136,136,0.3);color:var(--muted);}
+
+/* ══ POS FEATURES ══ */
+.pos-section{
+  background:var(--gray);
+  border-top:1px solid var(--gold-line);
+  border-bottom:1px solid var(--gold-line);
+  padding:80px 48px;
+  max-width:100%;
+}
+.pos-inner{max-width:1200px;margin:0 auto;}
+.pos-features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:24px;margin-top:48px;
+}
+.pos-feat{
+  background:var(--black);
+  border:1px solid var(--gold-line);
+  border-radius:4px;padding:28px 20px;
+  text-align:center;
+  transition:all 0.3s;
+}
+.pos-feat:hover{border-color:var(--gold);background:var(--gold-dim);}
+.pos-feat-icon{font-size:28px;margin-bottom:12px;}
+.pos-feat-name{font-size:13px;font-weight:800;color:var(--white);}
+.pos-cta{margin-top:48px;text-align:center;}
+
+/* ══ VISION ══ */
+#vision{
+  padding:120px 48px;
+  background:var(--black);
+  overflow:hidden;
+}
+.vision-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.vision-numbers{display:flex;flex-direction:column;gap:40px;}
+.vision-stat{
+  border-right:3px solid var(--gold);
+  padding-right:24px;
+}
+.vision-stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:48px;font-weight:900;
+  color:var(--gold);line-height:1;
+}
+.vision-stat-label{font-size:13px;color:var(--muted);margin-top:6px;}
+.vision-line{
+  width:60px;height:1px;
+  background:var(--gold);
+  margin:24px 0;
+}
+
+/* ══ ABOUT ══ */
+#about{
+  padding:120px 48px;
+  background:var(--gray);
+  border-top:1px solid var(--gold-line);
+}
+.about-inner{max-width:900px;margin:0 auto;text-align:center;}
+.about-quote{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(18px,2.5vw,28px);
+  font-weight:400;
+  color:var(--white);
+  line-height:1.7;
+  margin:40px 0;
+  font-style:italic;
+  padding:32px;
+  border-right:3px solid var(--gold);
+  text-align:right;
+}
+
+/* ══ CONTACT ══ */
+#contact{
+  padding:120px 48px;
+  background:var(--black);
+  border-top:1px solid var(--gold-line);
+}
+.contact-inner{max-width:700px;margin:0 auto;text-align:center;}
+.contact-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:48px;}
+.contact-card{
+  background:var(--gray);
+  border:1px solid var(--gold-line);
+  border-radius:4px;padding:28px 20px;
+  text-decoration:none;
+  color:var(--text);
+  transition:all 0.3s;
+  display:block;cursor:pointer;
+}
+.contact-card:hover{border-color:var(--gold);background:var(--gold-dim);transform:translateY(-3px);}
+.contact-card-icon{font-size:28px;margin-bottom:12px;}
+.contact-card-name{font-size:13px;font-weight:800;color:var(--white);}
+.contact-card-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+.wa-card{border-color:rgba(37,211,102,0.3);}
+.wa-card:hover{border-color:#25d366;background:rgba(37,211,102,0.08);}
+
+/* ══ FOOTER ══ */
+footer{
+  padding:40px 48px;
+  border-top:1px solid var(--gold-line);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-logo img{height:32px;object-fit:contain;opacity:0.6;}
+.footer-logo-txt{font-size:16px;font-weight:800;color:var(--gold);opacity:0.6;}
+.footer-copy{font-size:11px;color:var(--muted);letter-spacing:2px;}
+
+/* ══ MODAL ══ */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:999;
+  display:none;
+  justify-content:center;align-items:center;
+  backdrop-filter:blur(12px);
+  padding:24px;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--gray);
+  border:1px solid var(--gold-line);
+  border-radius:4px;
+  padding:48px;
+  max-width:440px;width:100%;
+  position:relative;
+  animation:modalIn 0.3s ease;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-close{
+  position:absolute;top:20px;left:20px;
+  background:none;border:none;
+  color:var(--muted);font-size:20px;cursor:pointer;
+  transition:color 0.2s;
+}
+.modal-close:hover{color:var(--white);}
+.modal-title{
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:900;color:var(--white);
+  margin-bottom:8px;
+}
+.modal-sub{font-size:12px;color:var(--muted);letter-spacing:2px;margin-bottom:36px;}
+.modal-links{display:flex;flex-direction:column;gap:12px;}
+.modal-link{
+  padding:16px 20px;
+  border:1px solid var(--gold-line);
+  border-radius:2px;
+  color:var(--text);font-size:13px;font-weight:700;
+  text-decoration:none;
+  display:flex;align-items:center;gap:12px;
+  transition:all 0.3s;cursor:pointer;background:transparent;
+  font-family:'Tajawal',sans-serif;width:100%;text-align:right;
+}
+.modal-link:hover{border-color:var(--gold);background:var(--gold-dim);color:var(--white);}
+.modal-link.wa{border-color:rgba(37,211,102,0.4);color:#25d366;}
+.modal-link.wa:hover{background:rgba(37,211,102,0.1);border-color:#25d366;}
+
+/* ══ DIVIDER ══ */
+.gold-divider{
+  height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:0;border:none;
+}
+
+/* ══ ANIMATIONS ══ */
+.fade-up{
+  opacity:0;transform:translateY(30px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:768px){
+  nav{padding:14px 20px;}
+  .nav-logo img{height:34px;}
+  #hero{padding:100px 20px 60px;}
+  .services-inner,.pos-section,#vision,#about,#contact{padding-left:20px;padding-right:20px;}
+  .vision-inner{grid-template-columns:1fr;gap:40px;}
+  .services-grid{grid-template-columns:1fr;gap:1px;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .btn-gold,.btn-outline{width:100%;max-width:280px;text-align:center;}
+  footer{flex-direction:column;text-align:center;padding:30px 20px;}
+  .modal-box{padding:32px 24px;}
+  .pos-features{grid-template-columns:repeat(2,1fr);}
+}
+</style>
 </head>
 <body>
 
-    <div id="langSelector" class="lang-overlay">
-        <div class="text-center px-4">
-            <h2 class="text-white text-2xl md:text-4xl mb-12 font-bold uppercase">Select Language / اختر اللغة</h2>
-            <div class="flex flex-col md:flex-row gap-6 justify-center">
-                <button onclick="setLanguage('en')" class="border-2 border-white text-white px-12 py-4 hover:bg-white hover:text-black transition uppercase text-sm font-bold rounded-full">English</button>
-                <button onclick="setLanguage('ar')" class="border-2 border-white text-white px-12 py-4 hover:bg-white hover:text-black transition text-sm font-bold font-tajawal rounded-full">العربية</button>
-            </div>
-        </div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="لوجو فطين اسود.png" alt="Fateen" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="nav-logo-txt" style="display:none;">FATEEN</span>
+  </div>
+  <button class="nav-cta" onclick="openModal()">تواصل معنا</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <span class="hero-badge">Fateen Digital Solutions</span>
+  <img src="لوجو فطين ابيض.png" alt="Fateen Logo" class="hero-logo"
+       onerror="this.style.display='none'">
+  <h1 class="hero-title fade-up">
+    حلول رقمية<br><span>ذكية ومتكاملة</span>
+  </h1>
+  <p class="hero-sub fade-up">نبني الأدوات التقنية التي تحتاجها مؤسستك — من أنظمة الكاشير الذكية إلى المواقع الإلكترونية الاحترافية</p>
+  <div class="hero-btns fade-up">
+    <button class="btn-gold" onclick="openModal()">تواصل معنا الآن</button>
+    <a class="btn-outline" href="#services">اكتشف خدماتنا</a>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-header fade-up">
+      <div class="section-label">SERVICES</div>
+      <h2 class="section-title">خدماتنا المتميزة</h2>
+      <p class="section-desc">أربع خدمات مصممة لتحويل طريقة عمل مؤسستك في العصر الرقمي</p>
     </div>
+    <div class="services-grid">
 
-    <div id="contactModal" class="contact-modal hidden">
-        <div class="modal-card fade-in">
-            <button onclick="toggleContactModal()" class="absolute top-6 right-6 text-gray-400 hover:text-black transition text-xl">✕</button>
-            <h2 id="modalTitle" class="text-black text-2xl md:text-3xl font-bold mb-4 uppercase leading-tight">تواصل معنا</h2>
-            <p id="modalSub" class="text-gray-500 text-xs mb-8 uppercase tracking-widest font-semibold">نحن هنا لخدمتك دائماً</p>
-            <div class="grid grid-cols-1 gap-5">
-                <a href="https://wa.me/201273929303" target="_blank" class="bg-[#25D366] pulse-green text-white p-5 rounded-2xl hover:opacity-90 transition font-bold uppercase text-xs tracking-widest shadow-lg">1. WhatsApp</a>
-                <a href="mailto:keromenaolm@gmail.com?subject=Inquiry from FATEEN Website" class="border-2 border-gray-100 p-5 rounded-2xl text-black hover:bg-gray-50 transition font-bold uppercase text-xs tracking-widest">2. Gmail</a>
-                <button onclick="showFbAlert()" class="border-2 border-gray-100 p-5 rounded-2xl text-black hover:bg-gray-50 transition font-bold uppercase text-xs tracking-widest">3. Facebook</button>
-            </div>
-        </div>
+      <!-- 1: POS -->
+      <div class="service-card fade-up" onclick="document.getElementById('pos-detail').scrollIntoView({behavior:'smooth'})">
+        <div class="service-num">01</div>
+        <div class="service-icon">🖥️</div>
+        <div class="service-name">فطين سيستم — نظام المبيعات</div>
+        <div class="service-desc">نظام كاشير ذكي متكامل يشمل إدارة المبيعات والمخازن والموظفين والتقارير الحية</div>
+        <span class="service-tag">متاح الآن</span>
+      </div>
+
+      <!-- 2: Website -->
+      <div class="service-card fade-up" onclick="document.getElementById('web-detail').scrollIntoView({behavior:'smooth'})">
+        <div class="service-num">02</div>
+        <div class="service-icon">🌐</div>
+        <div class="service-name">إنشاء المواقع الإلكترونية</div>
+        <div class="service-desc">مواقع احترافية لعرض خدماتك ومنتجاتك مع دومين مجاني لمدة سنة كاملة</div>
+        <span class="service-tag">متاح الآن</span>
+      </div>
+
+      <!-- 3: Design -->
+      <div class="service-card fade-up">
+        <div class="service-num">03</div>
+        <div class="service-icon">🎨</div>
+        <div class="service-name">خدمة الديزاين</div>
+        <div class="service-desc">تصميم هوية بصرية احترافية تعكس قيمة علامتك التجارية وتميزها في السوق</div>
+        <span class="service-tag soon">قريباً</span>
+      </div>
+
+      <!-- 4: Reservation -->
+      <div class="service-card fade-up">
+        <div class="service-num">04</div>
+        <div class="service-icon">🏨</div>
+        <div class="service-name">نظام الحجوزات للفنادق</div>
+        <div class="service-desc">حل متكامل لإدارة حجوزات الفنادق والمنشآت السياحية بكفاءة عالية</div>
+        <span class="service-tag soon">قريباً</span>
+      </div>
+
     </div>
+  </div>
+</section>
 
-    <div id="mainContent" class="hidden">
-        <nav class="py-3 px-6 md:px-12 flex justify-between items-center header-white sticky top-0 z-50">
-            <img src="لوجو فطين اسود.png" alt="Logo" class="h-10 md:h-12 w-auto">
-            <button onclick="toggleContactModal()" id="headerContact" class="bg-black text-white px-6 py-2.5 text-[10px] md:text-[11px] font-bold uppercase tracking-widest rounded-full hover:bg-gray-800 transition shadow-md">اطلب ديمو مجاني</button>
-        </nav>
-
-        <section class="min-h-[85vh] tech-bg-dark flex flex-col justify-center items-center text-center p-8">
-            <img src="لوجو فطين ابيض.png" alt="Hero Logo" class="w-72 md:w-[480px] mb-12">
-            <h2 id="heroSub" class="text-white text-base md:text-xl font-medium mb-12 px-4 leading-relaxed uppercase tracking-[0.2em]">INTELLIGENT POINT OF SALE SOLUTIONS</h2>
-            <div class="flex flex-wrap justify-center gap-6">
-                <button onclick="toggleContactModal()" id="btnChat" class="bg-white text-black px-12 py-4 text-xs font-bold uppercase hover:bg-gray-200 transition-all shadow-xl rounded-full">اطلب ديمو مجاني</button>
-                <a href="#services" id="btnSer" class="border-2 border-white text-white px-12 py-4 text-xs font-bold uppercase hover:bg-white hover:text-black transition-all rounded-full">Services</a>
-            </div>
-        </section>
-
-        <section id="services" class="py-28 tech-bg-light border-y border-gray-100">
-            <div class="max-w-7xl mx-auto px-8">
-                <h2 id="serTitle" class="text-center text-black text-3xl font-bold uppercase mb-20 tracking-widest">Our Expertise</h2>
-                <div id="servicesGrid" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8"></div>
-            </div>
-        </section>
-
-        <section class="py-24 tech-bg-dark text-center">
-            <img src="لوجو فطين ابيض.png" alt="Footer Logo" class="h-12 mx-auto mb-8 opacity-40">
-            <footer class="text-gray-400 text-[10px] uppercase tracking-[0.5em] font-bold px-4">
-                <p>© 2026 FATEEN POS SYSTEM - ASWAN, EGYPT</p>
-            </footer>
-        </section>
+<!-- POS DETAIL -->
+<div id="pos-detail" class="pos-section">
+  <div class="pos-inner">
+    <div class="fade-up">
+      <div class="section-label">01 — FATEEN SYSTEM</div>
+      <h2 class="section-title">نظام المبيعات الذكي</h2>
+      <p class="section-desc">منظومة متكاملة لإدارة كل جوانب نشاطك التجاري من مكان واحد</p>
     </div>
+    <div class="pos-features fade-up">
+      <div class="pos-feat">
+        <div class="pos-feat-icon">📊</div>
+        <div class="pos-feat-name">إدارة التقارير</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">🏪</div>
+        <div class="pos-feat-name">إدارة المخازن</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">💰</div>
+        <div class="pos-feat-name">إدارة المبيعات</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">🛒</div>
+        <div class="pos-feat-name">إدارة المشتريات</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">📒</div>
+        <div class="pos-feat-name">إدارة المحاسبة</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">👥</div>
+        <div class="pos-feat-name">إدارة الموظفين</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">🖨️</div>
+        <div class="pos-feat-name">الكاشير الذكي</div>
+      </div>
+    </div>
+    <div class="pos-cta fade-up">
+      <a href="https://fateen-os.netlify.app" target="_blank" class="btn-gold" style="display:inline-block;margin-left:16px;">
+        🚀 جرب الديمو مجاناً لمدة شهر
+      </a>
+      <button class="btn-outline" onclick="openModal()" style="margin-top:12px;">استفسر عن السعر</button>
+    </div>
+  </div>
+</div>
 
-    <script>
-        const content = {
-            en: {
-                heroSub: "INTELLIGENT POINT OF SALE SOLUTIONS",
-                btnChat: "Request Free Demo",
-                btnSer: "View Expertise",
-                serTitle: "Our Expertise",
-                modalTitle: "Contact Us",
-                modalSub: "We are always here to help",
-                headerContact: "Request Free Demo",
-                fbMsg: "Our Facebook page is under construction and will be available soon!",
-                services: [
-                    { t: "POS Systems", d: "High-performance systems for retail and hospitality, engineered for speed." },
-                    { t: "AI Insights", d: "Data-driven analysis to forecast growth and optimize operations." },
-                    { t: "Cloud Control", d: "Manage your business from anywhere with our secure cloud panels." },
-                    { t: "24/7 Support", d: "Elite technical team ready to support your business around the clock." }
-                ]
-            },
-            ar: {
-                heroSub: "حلول نقاط البيع الذكية المتكاملة للمؤسسات",
-                btnChat: "اطلب ديمو مجاني",
-                btnSer: "مجالات الخبرة",
-                serTitle: "خبراتنا المتميزة",
-                modalTitle: "تواصل معنا",
-                modalSub: "نحن هنا لخدمتك دائماً",
-                headerContact: "اطلب ديمو مجاني",
-                fbMsg: "صفحة الفيسبوك قيد التجهيز حالياً وستعمل قريباً جداً!",
-                services: [
-                    { t: "نظم الكاشير", d: "أنظمة برمجية فائقة الأداء مصممة خصيصاً للمحلات والمطاعم الكبرى." },
-                    { t: "ذكاء الأعمال", d: "تحليلات متطورة مبنية على الذكاء الاصطناعي لتوقع الأرباح والنمو." },
-                    { t: "التحكم السحابي", d: "إدارة شاملة لعملك من أي مكان مع أعلى معايير أمان البيانات." },
-                    { t: "دعم فني", d: "فريق من الخبراء التقنيين متاحين لخدمتك على مدار الساعة." }
-                ]
-            }
-        };
+<hr class="gold-divider">
 
-        let currentLang = 'en';
+<!-- WEB DETAIL -->
+<div id="web-detail" style="padding:80px 48px;background:var(--black);max-width:100%;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="fade-up">
+      <div class="section-label">02 — WEBSITES</div>
+      <h2 class="section-title">إنشاء المواقع الإلكترونية</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:48px;" class="fade-up">
+      <div class="pos-feat">
+        <div class="pos-feat-icon">📋</div>
+        <div class="pos-feat-name">موقع عرض الخدمات</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">🛍️</div>
+        <div class="pos-feat-name">موقع عرض المنتجات</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">🌐</div>
+        <div class="pos-feat-name">دومين مجاني لسنة كاملة</div>
+      </div>
+      <div class="pos-feat">
+        <div class="pos-feat-icon">🛠️</div>
+        <div class="pos-feat-name">دعم فني متواصل</div>
+      </div>
+      <div class="pos-feat" style="border-color:rgba(201,168,76,0.5);background:var(--gold-dim);">
+        <div class="pos-feat-icon">🏷️</div>
+        <div class="pos-feat-name" style="color:var(--gold);">خصم 30٪ للعملاء الجدد</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            document.body.setAttribute('data-lang', lang);
-            document.getElementById('heroSub').innerText = content[lang].heroSub;
-            document.getElementById('btnChat').innerText = content[lang].btnChat;
-            document.getElementById('btnSer').innerText = content[lang].btnSer;
-            document.getElementById('serTitle').innerText = content[lang].serTitle;
-            document.getElementById('modalTitle').innerText = content[lang].modalTitle;
-            document.getElementById('modalSub').innerText = content[lang].modalSub;
-            document.getElementById('headerContact').innerText = content[lang].headerContact;
+<hr class="gold-divider">
 
-            const grid = document.getElementById('servicesGrid');
-            grid.innerHTML = content[lang].services.map(s => `
-                <div class="bg-white border border-gray-100 p-10 text-center hover:shadow-xl transition-all rounded-3xl">
-                    <h3 class="text-sm font-bold mb-6 uppercase text-black tracking-widest">${s.t}</h3>
-                    <p class="text-gray-600 text-xs md:text-sm leading-relaxed font-normal">${s.d}</p>
-                </div>
-            `).join('');
+<!-- VISION -->
+<section id="vision">
+  <div class="vision-inner">
+    <div class="fade-up">
+      <div class="section-label">VISION</div>
+      <h2 class="section-title">رؤيتنا</h2>
+      <div class="vision-line"></div>
+      <p class="section-desc" style="max-width:100%;">
+        نسعى لأن نكون الشريك التقني الأول لقطاع التجزئة والمؤسسات الصغيرة والمتوسطة في صعيد مصر — نقدم تقنية ذكية وسهلة الوصول تفهم طبيعة السوق المصري وتتحدث بلغته.
+      </p>
+      <blockquote class="about-quote" style="margin-top:32px;font-size:18px;">
+        "الذكاء مش بس في الكود — الذكاء في حل المشكلة الصح"
+      </blockquote>
+    </div>
+    <div class="vision-numbers fade-up">
+      <div class="vision-stat">
+        <div class="vision-stat-num">٢٠٢٤</div>
+        <div class="vision-stat-label">تأسست فطين</div>
+      </div>
+      <div class="vision-stat">
+        <div class="vision-stat-num">٤+</div>
+        <div class="vision-stat-label">خدمات رقمية متكاملة</div>
+      </div>
+      <div class="vision-stat">
+        <div class="vision-stat-num">أسوان</div>
+        <div class="vision-stat-label">مقرنا — صعيد مصر</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            document.getElementById('langSelector').classList.add('hidden');
-            document.getElementById('mainContent').classList.remove('hidden');
-            window.scrollTo(0,0);
-        }
+<hr class="gold-divider">
 
-        function toggleContactModal() {
-            document.getElementById('contactModal').classList.toggle('hidden');
-        }
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="fade-up">
+      <div class="section-label" style="justify-content:center;">ABOUT</div>
+      <h2 class="section-title">من نحن؟</h2>
+      <p style="font-size:15px;color:var(--muted);line-height:1.9;margin-top:24px;">
+        فطين ديجيتال سليوشنز — شركة تقنية مصرية متخصصة في بناء حلول برمجية مخصصة لقطاع التجزئة والمؤسسات. نؤمن أن كل تاجر وكل مؤسسة في مصر تستحق أدوات رقمية حقيقية تساعدها على النمو والمنافسة.
+      </p>
+      <p style="font-size:15px;color:var(--muted);line-height:1.9;margin-top:16px;">
+        نبني منتجاتنا بفهم عميق للسوق المحلي، بدءاً من أسوان وصعيد مصر، بهدف التوسع لتشمل كل محافظات مصر.
+      </p>
+    </div>
+  </div>
+</section>
 
-        function showFbAlert() {
-            alert(content[currentLang].fbMsg);
-        }
-    </script>
+<hr class="gold-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="fade-up">
+      <div class="section-label" style="justify-content:center;">CONTACT</div>
+      <h2 class="section-title">تواصل معنا</h2>
+      <p class="section-desc" style="margin:0 auto;text-align:center;">فريقنا جاهز للإجابة على كل استفساراتك وتقديم عرض مخصص لاحتياجاتك</p>
+    </div>
+    <div class="contact-cards fade-up">
+      <a href="https://wa.me/201273929303" target="_blank" class="contact-card wa-card">
+        <div class="contact-card-icon">💬</div>
+        <div class="contact-card-name">واتساب</div>
+        <div class="contact-card-sub">تواصل فوري</div>
+      </a>
+      <a href="mailto:keromenaolm@gmail.com?subject=استفسار من موقع فطين" class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <div class="contact-card-name">البريد الإلكتروني</div>
+        <div class="contact-card-sub">keromenaolm@gmail.com</div>
+      </a>
+      <div class="contact-card" onclick="alert('صفحة الفيسبوك قيد التجهيز وستكون متاحة قريباً!')">
+        <div class="contact-card-icon">📘</div>
+        <div class="contact-card-name">فيسبوك</div>
+        <div class="contact-card-sub">قريباً</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="لوجو فطين اسود.png" alt="Fateen" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span class="footer-logo-txt" style="display:none;">FATEEN</span>
+  </div>
+  <p class="footer-copy">© 2026 FATEEN DIGITAL SOLUTIONS — ASWAN, EGYPT</p>
+</footer>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">تواصل معنا</div>
+    <div class="modal-sub">FATEEN DIGITAL SOLUTIONS</div>
+    <div class="modal-links">
+      <a href="https://wa.me/201273929303" target="_blank" class="modal-link wa">
+        <span>💬</span> واتساب — تواصل فوري
+      </a>
+      <a href="mailto:keromenaolm@gmail.com?subject=استفسار من موقع فطين" class="modal-link">
+        <span>✉️</span> البريد الإلكتروني
+      </a>
+      <button class="modal-link" onclick="alert('صفحة الفيسبوك قيد التجهيز وستكون متاحة قريباً!')">
+        <span>📘</span> فيسبوك — قريباً
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Modal
+function openModal(){document.getElementById('modal').classList.add('open');}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+// Scroll animations
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// Nav scroll effect
+window.addEventListener('scroll',()=>{
+  const nav=document.querySelector('nav');
+  if(window.scrollY>50){
+    nav.style.borderBottomColor='rgba(201,168,76,0.5)';
+  } else {
+    nav.style.borderBottomColor='rgba(201,168,76,0.3)';
+  }
+});
+</script>
 </body>
 </html>

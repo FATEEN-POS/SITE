@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>فطين | Fateen Digital Solutions</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        carbon: { 50:'#e5e5e5',100:'#b3b3b3',200:'#808080',300:'#4d4d4d',400:'#333333',500:'#2a2a2a',600:'#1f1f1f',700:'#1a1a1a',800:'#141414',900:'#0a0a0a' },
+        neon: { orange:'#FF6B00','orange-light':'#FF8C33','orange-dark':'#CC5500' },
+        silver: { light:'#E8E8E8',DEFAULT:'#C0C0C0',dark:'#8A8A8A' }
+      },
+      fontFamily: { heading:['Montserrat','sans-serif'], arabic:['Cairo','sans-serif'] }
+    }
+  }
+}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Cairo',sans-serif;background:#0a0a0a;color:#C0C0C0;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.scan-lines::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,107,0,.015) 2px,rgba(255,107,0,.015) 4px);pointer-events:none;z-index:2;}
+.tech-grid::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,107,0,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,0,.05) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:1;}
+.carbon-texture{background:radial-gradient(ellipse at 20% 50%,rgba(42,42,42,.4) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(42,42,42,.3) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(30,30,30,.5) 0%,transparent 50%),#0a0a0a;}
+.brushed-metal{background:linear-gradient(135deg,#141414 0%,#1a1a1a 25%,#161616 50%,#1a1a1a 75%,#141414 100%);}
+.neon-glow{box-shadow:0 0 15px rgba(255,107,0,.3),0 0 30px rgba(255,107,0,.15),0 0 60px rgba(255,107,0,.05);}
+.neon-glow-text{text-shadow:0 0 10px rgba(255,107,0,.5),0 0 30px rgba(255,107,0,.2);}
+.neon-border{border:1px solid rgba(255,107,0,.3);box-shadow:inset 0 0 20px rgba(255,107,0,.05);}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#0a0a0a;}
+::-webkit-scrollbar-thumb{background:#333;}
+::-webkit-scrollbar-thumb:hover{background:#FF6B00;}
+.scroll-progress{position:fixed;top:0;right:0;width:0%;height:2px;background:linear-gradient(90deg,#FF6B00,#FF8C33);z-index:1001;transition:width .1s ease;}
+.reveal-up{opacity:0;transform:translateY(40px);transition:all 1s cubic-bezier(.22,1,.36,1);}
+.reveal-up.active{opacity:1;transform:translateY(0);}
+@keyframes dataPulse{0%,100%{opacity:.3;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
+.data-point{animation:dataPulse 2s infinite;}
+.data-point:nth-child(2){animation-delay:.5s;}
+.data-point:nth-child(3){animation-delay:1s;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.cursor-blink{animation:blink 1s infinite;}
+.diagonal-stripes{background-image:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,107,0,.02) 10px,rgba(255,107,0,.02) 20px);}
+.mobile-menu{transform:translateX(100%);transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.mobile-menu.open{transform:translateX(0);}
+.card-line::after{content:'';position:absolute;bottom:0;right:0;width:0;height:2px;background:#FF6B00;transition:width .5s cubic-bezier(.22,1,.36,1);}
+.card-line:hover::after{width:100%;}
+</style>
+</head>
+<body class="carbon-texture">
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="fixed top-0 right-0 left-0 z-50 transition-all duration-500" dir="rtl">
+  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3 group">
+      <div class="w-8 h-8 bg-neon-orange flex items-center justify-center rotate-45 group-hover:rotate-[405deg] transition-transform duration-700">
+        <span class="text-black font-heading font-black text-sm -rotate-45">F</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-arabic font-black text-white text-base leading-none">فطين</span>
+        <span class="text-[8px] tracking-[.3em] text-neon-orange uppercase font-heading">Digital Solutions</span>
+      </div>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#services" class="text-xs font-heading font-semibold tracking-[.15em] uppercase text-silver-dark hover:text-neon-orange transition-colors">الخدمات</a>
+      <a href="#team"     class="text-xs font-heading font-semibold tracking-[.15em] uppercase text-silver-dark hover:text-neon-orange transition-colors">الفريق</a>
+      <a href="#vision"   class="text-xs font-heading font-semibold tracking-[.15em] uppercase text-silver-dark hover:text-neon-orange transition-colors">رؤيتنا</a>
+      <a href="#about"    class="text-xs font-heading font-semibold tracking-[.15em] uppercase text-silver-dark hover:text-neon-orange transition-colors">من نحن</a>
+      <button onclick="openModal()" class="mr-4 bg-neon-orange text-black font-arabic font-bold text-xs tracking-wide uppercase px-5 py-2.5 neon-glow hover:bg-neon-orange-light transition-all">تواصل معنا</button>
+    </div>
+    <button id="menuToggle" class="md:hidden text-white w-8 h-8 flex flex-col justify-center items-center gap-1.5">
+      <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar1"></span>
+      <span class="w-4 h-0.5 bg-neon-orange transition-all duration-300" id="bar2"></span>
+      <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar3"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 bg-carbon-900/98 backdrop-blur-md flex flex-col justify-center items-center gap-8" dir="rtl">
+  <a href="#services" class="text-xl font-arabic font-bold text-white hover:text-neon-orange transition-colors" onclick="closeMobileMenu()">الخدمات</a>
+  <a href="#team"     class="text-xl font-arabic font-bold text-white hover:text-neon-orange transition-colors" onclick="closeMobileMenu()">الفريق</a>
+  <a href="#vision"   class="text-xl font-arabic font-bold text-white hover:text-neon-orange transition-colors" onclick="closeMobileMenu()">رؤيتنا</a>
+  <a href="#about"    class="text-xl font-arabic font-bold text-white hover:text-neon-orange transition-colors" onclick="closeMobileMenu()">من نحن</a>
+  <button onclick="openModal();closeMobileMenu();" class="mt-4 bg-neon-orange text-black font-arabic font-bold text-sm px-8 py-4 neon-glow">تواصل معنا</button>
+</div>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex flex-col overflow-hidden scan-lines tech-grid" dir="rtl">
+  <!-- Corner brackets -->
+  <div class="absolute top-20 right-6 md:right-16 z-10 hidden md:block">
+    <div class="w-12 h-12 border-r border-t border-neon-orange/30"></div>
+  </div>
+  <div class="absolute bottom-28 left-6 md:left-16 z-10 hidden md:block">
+    <div class="w-12 h-12 border-l border-b border-neon-orange/30"></div>
+  </div>
+  <!-- Data points (left) -->
+  <div class="absolute top-24 left-8 md:left-16 z-10 hidden md:block">
+    <div class="flex items-center gap-2 mb-3"><div class="data-point w-1.5 h-1.5 bg-neon-orange rounded-full"></div><span class="text-[9px] font-mono tracking-widest text-neon-orange/60 uppercase">System Active</span></div>
+    <div class="flex items-center gap-2 mb-3"><div class="data-point w-1.5 h-1.5 bg-neon-orange rounded-full"></div><span class="text-[9px] font-mono tracking-widest text-silver-dark uppercase">Aswan, Egypt</span></div>
+    <div class="flex items-center gap-2"><div class="data-point w-1.5 h-1.5 bg-neon-orange rounded-full"></div><span class="text-[9px] font-mono tracking-widest text-silver-dark uppercase">fateen1.me</span></div>
+  </div>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-carbon-900 via-carbon-900/40 to-transparent"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 flex-1 flex items-end max-w-7xl mx-auto px-6 pb-0 w-full">
+    <div class="pb-10 pt-28">
+      <div class="mb-6 flex items-center gap-3">
+        <div class="w-8 h-px bg-neon-orange"></div>
+        <span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">Fateen Digital Solutions — أسوان، مصر</span>
+      </div>
+      <h1 class="font-arabic font-black leading-[1.05] text-white mb-6" style="font-size:clamp(2.4rem,8vw,6rem);">
+        حلول رقمية<br/>
+        <span class="text-neon-orange neon-glow-text">ذكية</span> ومتكاملة<span class="text-neon-orange cursor-blink">_</span>
+      </h1>
+      <p class="max-w-lg text-sm leading-relaxed text-silver-dark mb-8 font-arabic">
+        نبني الأدوات التقنية التي تحتاجها مؤسستك — من أنظمة الكاشير الذكية إلى المواقع الإلكترونية الاحترافية
+      </p>
+      <div class="flex items-center gap-4 flex-wrap mb-10">
+        <button onclick="openModal()" class="bg-neon-orange text-black font-arabic font-bold text-sm px-8 py-3.5 neon-glow hover:bg-neon-orange-light transition-all flex items-center gap-2">
+          <i class="fas fa-handshake text-xs"></i> تواصل معنا الآن
+        </button>
+        <a href="#services" class="border border-neon-orange/30 text-silver hover:border-neon-orange hover:text-neon-orange font-arabic font-bold text-sm px-8 py-3.5 transition-all flex items-center gap-2 backdrop-blur-sm">
+          <i class="fas fa-rocket text-xs"></i> اكتشف خدماتنا
+        </a>
+      </div>
+      <!-- Team strip -->
+      <div class="flex items-center gap-6 overflow-x-auto pb-2">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <div class="w-10 h-10 rounded-full bg-carbon-600 border border-carbon-400 flex items-center justify-center"><span class="text-neon-orange font-heading font-black text-sm">K</span></div>
+          <div><p class="text-[10px] font-arabic font-bold text-white">كيرلس هاني</p><p class="text-[8px] tracking-wide text-neon-orange uppercase">CEO / Full Stack Dev</p></div>
+        </div>
+        <div class="w-px h-8 bg-carbon-400 flex-shrink-0"></div>
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <div class="w-10 h-10 rounded-full bg-carbon-600 border border-carbon-400 flex items-center justify-center"><span class="text-neon-orange font-heading font-black text-sm">A</span></div>
+          <div><p class="text-[10px] font-arabic font-bold text-white">أحمد عبد العزيز</p><p class="text-[8px] tracking-wide text-neon-orange uppercase">CFO / Finance Lead</p></div>
+        </div>
+        <div class="w-px h-8 bg-carbon-400 flex-shrink-0"></div>
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <div class="w-10 h-10 rounded-full bg-carbon-600 border border-carbon-400 flex items-center justify-center"><span class="text-neon-orange font-heading font-black text-sm">K</span></div>
+          <div><p class="text-[10px] font-arabic font-bold text-white">كيرلس أمير</p><p class="text-[8px] tracking-wide text-neon-orange uppercase">CRM / Sales Lead</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats bar -->
+  <div class="relative z-10 border-t border-neon-orange/10 bg-carbon-900/80 backdrop-blur-md w-full">
+    <div class="max-w-7xl mx-auto px-6 py-4 grid grid-cols-3 divide-x divide-x-reverse divide-neon-orange/10">
+      <div class="text-center px-4"><div class="text-2xl md:text-3xl font-heading font-black text-neon-orange neon-glow-text">٢٠٢٦</div><div class="text-[9px] tracking-widest uppercase text-silver-dark font-arabic mt-1">تأسست فطين</div></div>
+      <div class="text-center px-4"><div class="text-2xl md:text-3xl font-heading font-black text-neon-orange neon-glow-text">٩+</div><div class="text-[9px] tracking-widest uppercase text-silver-dark font-arabic mt-1">خدمة رقمية</div></div>
+      <div class="text-center px-4"><div class="text-2xl md:text-3xl font-heading font-black text-neon-orange neon-glow-text">أسوان</div><div class="text-[9px] tracking-widest uppercase text-silver-dark font-arabic mt-1">مقرنا — صعيد مصر</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-24 md:py-32 relative" dir="rtl">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-16 reveal-up">
+      <div class="flex items-center gap-3 mb-4"><div class="w-8 h-px bg-neon-orange"></div><span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">SERVICES</span></div>
+      <h2 class="font-arabic font-black text-white mb-4" style="font-size:clamp(2rem,5vw,3.5rem);">خدماتنا المتميزة</h2>
+      <p class="text-silver-dark font-arabic text-sm leading-relaxed max-w-md">حلول تقنية مصممة لتحويل طريقة عمل مؤسستك في العصر الرقمي</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-neon-orange/10 border border-neon-orange/10">
+      <!-- Service cards -->
+      <div class="card-line relative bg-carbon-800 p-10 cursor-pointer overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300" onclick="document.getElementById('pos-detail').scrollIntoView({behavior:'smooth'})">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity duration-300"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">01</div>
+          <div class="text-2xl mb-3">🖥️</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">فطين سيستم — اونلاين</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">نظام كاشير ذكي متكامل لإدارة المبيعات، المخازن، الموظفين والتقارير الحية عبر الإنترنت</p>
+          <span class="border border-neon-orange/40 text-neon-orange text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 bg-neon-orange/5 inline-block">متاح الآن</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">02</div>
+          <div class="text-2xl mb-3">🌐</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">إنشاء المواقع الإلكترونية</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">مواقع احترافية لعرض خدماتك ومنتجاتك مع دومين مجاني لمدة سنة كاملة</p>
+          <span class="border border-neon-orange/40 text-neon-orange text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 bg-neon-orange/5 inline-block">متاح الآن</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">03</div>
+          <div class="text-2xl mb-3">🎨</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">خدمة الديزاين</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">تصميم هوية بصرية احترافية تعكس قيمة علامتك التجارية وتميزها في السوق</p>
+          <span class="border border-neon-orange/40 text-neon-orange text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 bg-neon-orange/5 inline-block">متاح</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">04</div>
+          <div class="text-2xl mb-3">📱</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">سيستم كاشير اوفلاين</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">نظام كاشير ذكي لإدارة المبيعات والمخازن والموظفين والتقارير دون الحاجة للإنترنت</p>
+          <span class="border border-neon-orange/40 text-neon-orange text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 bg-neon-orange/5 inline-block">متاح</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">05</div>
+          <div class="text-2xl mb-3">🏨</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">نظام الحجوزات</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">حل متكامل لإدارة حجوزات الفنادق والمنشآت السياحية بكفاءة عالية</p>
+          <span class="border border-silver-dark/30 text-silver-dark text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 inline-block">قريباً</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">06</div>
+          <div class="text-2xl mb-3">🏋️</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">سيستم إدارة صالة الرياضة</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">نظام متكامل لإدارة الجيم والاشتراكات والأعضاء والتقارير المالية</p>
+          <span class="border border-silver-dark/30 text-silver-dark text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 inline-block">قريباً</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">07</div>
+          <div class="text-2xl mb-3">🎮</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">سيستم بلايستيشن</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">نظام ذكي لإدارة صالات البلايستيشن والجلسات والحجوزات والإيرادات</p>
+          <span class="border border-silver-dark/30 text-silver-dark text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 inline-block">قريباً</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">08</div>
+          <div class="text-2xl mb-3">💰</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">استشارة مالية</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">خدمات استشارية مالية متخصصة لمساعدة مؤسستك على النمو واتخاذ قرارات مالية صائبة</p>
+          <span class="border border-neon-orange/40 text-neon-orange text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 bg-neon-orange/5 inline-block">متاح</span>
+        </div>
+      </div>
+      <div class="card-line relative bg-carbon-800 p-10 overflow-hidden reveal-up group transition-transform hover:-translate-y-1 duration-300">
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-100 bg-neon-orange/[.04] transition-opacity"></div>
+        <div class="relative z-10">
+          <div class="text-6xl font-heading font-black text-neon-orange/10 group-hover:text-neon-orange/25 transition-colors leading-none mb-4">09</div>
+          <div class="text-2xl mb-3">⚙️</div>
+          <h3 class="font-arabic font-bold text-white text-base mb-3">استشارة تقنية</h3>
+          <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-4">إرشادات تقنية متخصصة لاختيار الحلول البرمجية المناسبة لطبيعة عملك</p>
+          <span class="border border-neon-orange/40 text-neon-orange text-[10px] font-heading font-bold tracking-[.15em] uppercase px-3 py-1 bg-neon-orange/5 inline-block">متاح</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POS DETAIL -->
+<section id="pos-detail" class="brushed-metal border-t border-b border-neon-orange/10 py-20 md:py-28 relative overflow-hidden diagonal-stripes" dir="rtl">
+  <div class="absolute inset-0 bg-gradient-to-l from-neon-orange/5 to-transparent pointer-events-none"></div>
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="reveal-up mb-10">
+      <div class="flex items-center gap-3 mb-4"><div class="w-8 h-px bg-neon-orange"></div><span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">01 — FATEEN SYSTEM</span></div>
+      <h2 class="font-arabic font-black text-white mb-3" style="font-size:clamp(1.8rem,4vw,3rem);">نظام المبيعات الذكي</h2>
+      <p class="text-silver-dark font-arabic text-sm leading-relaxed max-w-lg">منظومة متكاملة لإدارة كل جوانب نشاطك التجاري من مكان واحد</p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 mb-10 reveal-up">
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">📊</div><div class="text-[11px] font-arabic font-bold text-white">إدارة التقارير</div></div>
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">📦</div><div class="text-[11px] font-arabic font-bold text-white">إدارة المخازن</div></div>
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">🛒</div><div class="text-[11px] font-arabic font-bold text-white">إدارة المبيعات</div></div>
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">🚚</div><div class="text-[11px] font-arabic font-bold text-white">إدارة المشتريات</div></div>
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">💹</div><div class="text-[11px] font-arabic font-bold text-white">إدارة المحاسبة</div></div>
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">👥</div><div class="text-[11px] font-arabic font-bold text-white">إدارة الموظفين</div></div>
+      <div class="neon-border p-5 text-center hover:bg-neon-orange/5 transition-colors hover:-translate-y-1 transition-transform"><div class="text-xl mb-2">🖥️</div><div class="text-[11px] font-arabic font-bold text-white">الكاشير الذكي</div></div>
+    </div>
+    <div class="flex gap-4 flex-wrap reveal-up">
+      <a href="https://pos.fateen1.me/" target="_blank" class="bg-neon-orange text-black font-arabic font-bold text-sm px-8 py-3.5 neon-glow hover:bg-neon-orange-light transition-all">🚀 جرب الديمو مجاناً — أسبوع كامل</a>
+      <button onclick="openModal()" class="border border-neon-orange/30 text-neon-orange font-arabic font-bold text-sm px-8 py-3.5 hover:border-neon-orange hover:bg-neon-orange/5 transition-all">استفسر عن السعر</button>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="py-24 md:py-32 bg-carbon-800" dir="rtl">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="mb-16 reveal-up">
+      <div class="flex items-center gap-3 mb-4"><div class="w-8 h-px bg-neon-orange"></div><span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">OUR TEAM</span></div>
+      <h2 class="font-arabic font-black text-white mb-4" style="font-size:clamp(2rem,5vw,3.5rem);">فريق فطين</h2>
+      <p class="text-silver-dark font-arabic text-sm max-w-md">نخبة من المتخصصين يعملون معاً لتقديم أفضل الحلول التقنية</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="card-line relative neon-border p-10 text-center hover:-translate-y-2 transition-transform overflow-hidden reveal-up">
+        <div class="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-neon-orange/50 to-transparent"></div>
+        <div class="w-20 h-20 mx-auto mb-6 rounded-full border border-neon-orange/30 bg-carbon-700 flex items-center justify-center"><span class="text-3xl font-heading font-black text-neon-orange neon-glow-text">K</span></div>
+        <h3 class="font-arabic font-black text-white text-xl mb-1">كيرلس هاني</h3>
+        <p class="text-[10px] font-heading font-bold tracking-[.25em] uppercase text-neon-orange mb-3">CEO</p>
+        <p class="font-arabic text-silver-dark text-xs leading-relaxed mb-6">Full Stack Developer & UI/UX Designer<br/>المؤسس والمدير التنفيذي</p>
+        <div class="flex justify-center gap-3">
+          <a href="#" class="border border-neon-orange/20 text-neon-orange/60 hover:border-neon-orange hover:text-neon-orange text-xs px-4 py-2 transition-all font-heading flex items-center gap-1.5"><i class="fab fa-linkedin-in text-[10px]"></i> LinkedIn</a>
+          <a href="#" class="border border-neon-orange/20 text-neon-orange/60 hover:border-neon-orange hover:text-neon-orange text-xs px-4 py-2 transition-all font-heading flex items-center gap-1.5"><i class="fas fa-briefcase text-[10px]"></i> Portfolio</a>
+        </div>
+      </div>
+      <div class="card-line relative neon-border p-10 text-center hover:-translate-y-2 transition-transform overflow-hidden reveal-up">
+        <div class="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-neon-orange/50 to-transparent"></div>
+        <div class="w-20 h-20 mx-auto mb-6 rounded-full border border-neon-orange/30 bg-carbon-700 flex items-center justify-center"><span class="text-3xl font-heading font-black text-neon-orange neon-glow-text">A</span></div>
+        <h3 class="font-arabic font-black text-white text-xl mb-1">أحمد عبد العزيز</h3>
+        <p class="text-[10px] font-heading font-bold tracking-[.25em] uppercase text-neon-orange mb-3">CFO</p>
+        <p class="font-arabic text-silver-dark text-xs leading-relaxed mb-6">استشارات مالية، تسعير المنتجات<br/>ومحاسبة مالية</p>
+        <div class="flex justify-center gap-3">
+          <a href="#" class="border border-neon-orange/20 text-neon-orange/60 hover:border-neon-orange hover:text-neon-orange text-xs px-4 py-2 transition-all font-heading flex items-center gap-1.5"><i class="fab fa-linkedin-in text-[10px]"></i> LinkedIn</a>
+          <a href="#" class="border border-neon-orange/20 text-neon-orange/60 hover:border-neon-orange hover:text-neon-orange text-xs px-4 py-2 transition-all font-heading flex items-center gap-1.5"><i class="fas fa-briefcase text-[10px]"></i> Portfolio</a>
+        </div>
+      </div>
+      <div class="card-line relative neon-border p-10 text-center hover:-translate-y-2 transition-transform overflow-hidden reveal-up">
+        <div class="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-neon-orange/50 to-transparent"></div>
+        <div class="w-20 h-20 mx-auto mb-6 rounded-full border border-neon-orange/30 bg-carbon-700 flex items-center justify-center"><span class="text-3xl font-heading font-black text-neon-orange neon-glow-text">K</span></div>
+        <h3 class="font-arabic font-black text-white text-xl mb-1">كيرلس أمير</h3>
+        <p class="text-[10px] font-heading font-bold tracking-[.25em] uppercase text-neon-orange mb-3">CRM</p>
+        <p class="font-arabic text-silver-dark text-xs leading-relaxed mb-6">مدير علاقات عامة<br/>ومدير فريق المبيعات</p>
+        <div class="flex justify-center gap-3">
+          <a href="#" class="border border-neon-orange/20 text-neon-orange/60 hover:border-neon-orange hover:text-neon-orange text-xs px-4 py-2 transition-all font-heading flex items-center gap-1.5"><i class="fab fa-linkedin-in text-[10px]"></i> LinkedIn</a>
+          <a href="#" class="border border-neon-orange/20 text-neon-orange/60 hover:border-neon-orange hover:text-neon-orange text-xs px-4 py-2 transition-all font-heading flex items-center gap-1.5"><i class="fas fa-briefcase text-[10px]"></i> Portfolio</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision" class="py-24 md:py-32 relative" dir="rtl">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+      <div class="reveal-up">
+        <div class="flex items-center gap-3 mb-4"><div class="w-8 h-px bg-neon-orange"></div><span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">VISION</span></div>
+        <h2 class="font-arabic font-black text-white mb-6" style="font-size:clamp(2rem,5vw,3.5rem);">رؤيتنا</h2>
+        <div class="w-16 h-px bg-neon-orange/50 mb-8"></div>
+        <p class="font-arabic text-silver-dark text-sm leading-relaxed mb-8">نسعى لأن نكون الشريك التقني الأول لقطاع التجزئة والمؤسسات الصغيرة والمتوسطة في صعيد مصر — نقدم تقنية ذكية وسهلة الوصول تفهم طبيعة السوق المصري وتتحدث بلغته.</p>
+        <blockquote class="border-r-2 border-neon-orange pr-6 bg-neon-orange/[.04] p-6 font-arabic text-white text-base leading-relaxed italic">"الذكاء مش بس في الكود — الذكاء في حل المشكلة الصح"</blockquote>
+      </div>
+      <div class="flex flex-col gap-6 reveal-up">
+        <div class="neon-border p-6 hover:bg-neon-orange/[.04] transition-colors"><div class="text-5xl font-heading font-black text-neon-orange neon-glow-text mb-2">٢٠٢٦</div><div class="flex items-center gap-2"><div class="data-point w-1.5 h-1.5 bg-neon-orange rounded-full"></div><span class="font-arabic text-silver-dark text-sm">تأسست فطين</span></div></div>
+        <div class="neon-border p-6 hover:bg-neon-orange/[.04] transition-colors"><div class="text-5xl font-heading font-black text-neon-orange neon-glow-text mb-2">٩+</div><div class="flex items-center gap-2"><div class="data-point w-1.5 h-1.5 bg-neon-orange rounded-full"></div><span class="font-arabic text-silver-dark text-sm">خدمات رقمية متكاملة</span></div></div>
+        <div class="neon-border p-6 hover:bg-neon-orange/[.04] transition-colors"><div class="text-5xl font-heading font-black text-neon-orange neon-glow-text mb-2">أسوان</div><div class="flex items-center gap-2"><div class="data-point w-1.5 h-1.5 bg-neon-orange rounded-full"></div><span class="font-arabic text-silver-dark text-sm">مقرنا — صعيد مصر</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-24 md:py-28 bg-carbon-800 border-t border-neon-orange/10" dir="rtl">
+  <div class="max-w-3xl mx-auto px-6 text-center reveal-up">
+    <div class="flex justify-center items-center gap-3 mb-4"><div class="w-8 h-px bg-neon-orange"></div><span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">ABOUT</span><div class="w-8 h-px bg-neon-orange"></div></div>
+    <h2 class="font-arabic font-black text-white mb-8" style="font-size:clamp(2rem,5vw,3.5rem);">من نحن؟</h2>
+    <p class="font-arabic text-silver-dark text-sm leading-loose mb-4">فطين ديجيتال سليوشنز — شركة تقنية مصرية متخصصة في بناء حلول برمجية مخصصة لقطاع التجزئة والمؤسسات. نؤمن أن كل تاجر وكل مؤسسة في مصر تستحق أدوات رقمية حقيقية تساعدها على النمو والمنافسة.</p>
+    <p class="font-arabic text-silver-dark text-sm leading-loose">نبني منتجاتنا بفهم عميق للسوق المحلي، بدءاً من أسوان وصعيد مصر، بهدف التوسع لتشمل كل محافظات مصر.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="py-24 md:py-32 diagonal-stripes relative" dir="rtl">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <div class="reveal-up mb-12">
+      <div class="flex justify-center items-center gap-3 mb-4"><div class="w-8 h-px bg-neon-orange"></div><span class="text-[10px] font-heading font-bold tracking-[.3em] uppercase text-neon-orange">CONTACT</span><div class="w-8 h-px bg-neon-orange"></div></div>
+      <h2 class="font-arabic font-black text-white mb-4" style="font-size:clamp(2rem,5vw,3.5rem);">تواصل معنا</h2>
+      <p class="font-arabic text-silver-dark text-sm">فريقنا جاهز للإجابة على كل استفساراتك وتقديم عرض مخصص لاحتياجاتك</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 reveal-up">
+      <a href="https://wa.me/201273929303" target="_blank" class="card-line relative neon-border p-6 text-center hover:bg-neon-orange/[.04] transition-colors block overflow-hidden" style="border-color:rgba(37,211,102,.25);">
+        <div class="text-2xl mb-3">💬</div><div class="font-arabic font-bold text-white text-sm mb-1">واتساب</div><div class="font-arabic text-silver-dark text-[11px]">+20 127 392 9303</div>
+      </a>
+      <a href="mailto:keromenaolm@gmail.com?subject=استفسار من موقع فطين" class="card-line relative neon-border p-6 text-center hover:bg-neon-orange/[.04] transition-colors block overflow-hidden">
+        <div class="text-2xl mb-3">📧</div><div class="font-arabic font-bold text-white text-sm mb-1">البريد الإلكتروني</div><div class="font-arabic text-silver-dark text-[11px]">keromenaolm@gmail.com</div>
+      </a>
+      <a href="https://www.facebook.com/share/p/18Hq29aoR9/" target="_blank" class="card-line relative neon-border p-6 text-center hover:bg-neon-orange/[.04] transition-colors block overflow-hidden">
+        <div class="text-2xl mb-3">📘</div><div class="font-arabic font-bold text-white text-sm mb-1">فيسبوك</div><div class="font-arabic text-silver-dark text-[11px]">تابعنا على فيسبوك</div>
+      </a>
+      <a href="https://www.instagram.com/p/DXEi0IRDRDL/" target="_blank" class="card-line relative neon-border p-6 text-center hover:bg-neon-orange/[.04] transition-colors block overflow-hidden">
+        <div class="text-2xl mb-3">📸</div><div class="font-arabic font-bold text-white text-sm mb-1">انستجرام</div><div class="font-arabic text-silver-dark text-[11px]">تابعنا على انستجرام</div>
+      </a>
+    </div>
+    <div class="flex justify-center gap-4 reveal-up">
+      <a href="https://wa.me/201273929303" target="_blank" class="w-11 h-11 border border-neon-orange/20 flex items-center justify-center text-silver-dark hover:border-neon-orange hover:text-neon-orange transition-all rounded-full"><i class="fab fa-whatsapp"></i></a>
+      <a href="mailto:keromenaolm@gmail.com" class="w-11 h-11 border border-neon-orange/20 flex items-center justify-center text-silver-dark hover:border-neon-orange hover:text-neon-orange transition-all rounded-full"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.facebook.com/share/p/18Hq29aoR9/" target="_blank" class="w-11 h-11 border border-neon-orange/20 flex items-center justify-center text-silver-dark hover:border-neon-orange hover:text-neon-orange transition-all rounded-full"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/p/DXEi0IRDRDL/" target="_blank" class="w-11 h-11 border border-neon-orange/20 flex items-center justify-center text-silver-dark hover:border-neon-orange hover:text-neon-orange transition-all rounded-full"><i class="fab fa-instagram"></i></a>
+      <a href="https://fateen1.me" target="_blank" class="w-11 h-11 border border-neon-orange/20 flex items-center justify-center text-silver-dark hover:border-neon-orange hover:text-neon-orange transition-all rounded-full"><i class="fas fa-globe"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-carbon-900 border-t border-neon-orange/10 py-8 px-6" dir="rtl">
+  <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 bg-neon-orange flex items-center justify-center rotate-45"><span class="text-black font-heading font-black text-xs -rotate-45">F</span></div>
+      <span class="font-arabic text-silver-dark text-sm">فطين ديجيتال سليوشنز</span>
+    </div>
+    <p class="text-[10px] font-heading tracking-[.2em] uppercase text-silver-dark/50">© 2026 FATEEN DIGITAL SOLUTIONS — ASWAN, EGYPT</p>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div id="modal" class="fixed inset-0 z-[999] bg-black/90 backdrop-blur-lg hidden justify-center items-center p-6" onclick="if(event.target===this)closeModal()">
+  <div class="bg-carbon-800 border border-neon-orange/20 max-w-md w-full p-10 relative" style="animation:modalIn .3s ease">
+    <div class="absolute top-0 right-0 left-0 h-px bg-gradient-to-r from-transparent via-neon-orange/60 to-transparent"></div>
+    <button onclick="closeModal()" class="absolute top-4 left-4 text-silver-dark hover:text-neon-orange transition-colors text-lg">✕</button>
+    <h3 class="font-arabic font-black text-white text-2xl mb-1">تواصل معنا</h3>
+    <p class="text-[10px] font-heading tracking-[.25em] uppercase text-silver-dark/60 mb-8">Fateen Digital Solutions</p>
+    <div class="flex flex-col gap-3">
+      <a href="https://wa.me/201273929303" target="_blank" class="flex items-center gap-3 border p-4 font-arabic font-bold text-sm transition-colors text-green-400 hover:bg-green-500/5" style="border-color:rgba(37,211,102,.25)"><i class="fab fa-whatsapp text-base"></i> واتساب — تواصل فوري</a>
+      <a href="mailto:keromenaolm@gmail.com?subject=استفسار من موقع فطين" class="flex items-center gap-3 border border-neon-orange/20 text-silver p-4 hover:bg-neon-orange/5 transition-colors font-arabic font-bold text-sm"><i class="fas fa-envelope text-base"></i> البريد الإلكتروني</a>
+      <a href="https://www.facebook.com/share/p/18Hq29aoR9/" target="_blank" class="flex items-center gap-3 border border-neon-orange/20 text-silver p-4 hover:bg-neon-orange/5 transition-colors font-arabic font-bold text-sm"><i class="fab fa-facebook-f text-base"></i> صفحة فيسبوك</a>
+      <a href="https://www.instagram.com/p/DXEi0IRDRDL/" target="_blank" class="flex items-center gap-3 border border-neon-orange/20 text-silver p-4 hover:bg-neon-orange/5 transition-colors font-arabic font-bold text-sm"><i class="fab fa-instagram text-base"></i> حساب انستجرام</a>
+    </div>
+  </div>
+</div>
+<style>@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px);}to{opacity:1;transform:none;}}</style>
+
+<script>
+// Scroll progress + navbar
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollProgress').style.width = (window.pageYOffset / (document.body.offsetHeight - window.innerHeight) * 100) + '%';
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 50) { nav.style.cssText = 'background:rgba(10,10,10,.96);border-bottom:1px solid rgba(255,107,0,.12);backdrop-filter:blur(16px);'; }
+  else { nav.style.cssText = 'background:transparent;border-bottom:none;'; }
+});
+
+// Reveal
+const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); }), { threshold:.1 });
+document.querySelectorAll('.reveal-up').forEach(el => obs.observe(el));
+
+// Mobile menu
+document.getElementById('menuToggle').addEventListener('click', () => {
+  const open = document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('bar1').style.transform = open ? 'rotate(45deg) translateY(8px)' : '';
+  document.getElementById('bar2').style.opacity  = open ? '0' : '1';
+  document.getElementById('bar3').style.transform = open ? 'rotate(-45deg) translateY(-8px)' : '';
+});
+function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+// Modal
+function openModal()  { document.getElementById('modal').style.display = 'flex'; }
+function closeModal() { document.getElementById('modal').style.display = 'none'; }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const t = document.querySelector(this.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
